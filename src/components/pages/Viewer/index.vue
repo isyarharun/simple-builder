@@ -1,17 +1,28 @@
 <template>
-  <div>
-    <div v-for="(component, index) in components" :key="index">
-      <component
-        :is="component.component"
-        :options="component.options"
-        :question="component.question"
-      />
-    </div>
-    <div>
-      <a-button @click="sendForm" type="primary" style="margin-left: 8px">
-        Send
-      </a-button>
-    </div>
+  <div class="viewer-wrapper">
+    <a-row>
+      <a-col :span="6"></a-col>
+      <a-col :span="12">
+        <div v-for="(component, index) in components" :key="index">
+          <component
+            :is="component.component"
+            :options="component.options"
+            :question="component.question"
+          />
+        </div>
+        <div>
+          <a-button
+            v-if="components.length > 0"
+            @click="sendForm"
+            type="primary"
+            style="margin-top: 10px"
+          >
+            Submit
+          </a-button>
+        </div>
+      </a-col>
+      <a-col :span="6"></a-col>
+    </a-row>
   </div>
 </template>
 <script>
@@ -80,3 +91,30 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.viewer-wrapper {
+  text-align: left;
+
+  .question-wrapper {
+    border: none;
+    resize: none;
+    border-bottom: solid;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+  }
+
+  .ant-card-bordered {
+    margin-top: 10px;
+    background-color: wheat;
+  }
+
+  .add-option-btn {
+    margin-top: 10px;
+  }
+
+  .ant-input {
+    margin-bottom: 10px;
+  }
+}
+</style>

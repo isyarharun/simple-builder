@@ -1,13 +1,13 @@
 <template>
   <div>
     <a-card>
-      <a-textarea :value.sync="question" placeholder="Dropdown Question" />
+      <a-input class="question-wrapper" v-model="model"/>
       <div v-for="(option, index) in options" :key="index">
-        <a-input v-model="option.text" placeholder="Your option" />
+        <a-input v-model="option.text" />
       </div>
       <div>
-        <a-button @click="add()" type="primary">
-          Add
+        <a-button class="add-option-btn" @click="add()" type="primary">
+          Add option
         </a-button>
       </div>
     </a-card>

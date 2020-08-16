@@ -1,8 +1,8 @@
 <template>
   <div>
     <a-card>
-      <a-textarea v-model="model" />
-      <a-input placeholder="Your answer" />
+      <a-input class="question-wrapper" v-model="model" />
+      <a-input disabled placeholder="Your answer" />
     </a-card>
   </div>
 </template>

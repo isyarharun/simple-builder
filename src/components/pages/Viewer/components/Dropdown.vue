@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-card>
-      <div>{{ question }}</div>
+      <div class="question-wrapper">{{ question }}</div>
       <div>
         <a-select style="width: 100%">
           <a-select-option

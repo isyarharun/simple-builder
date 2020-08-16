@@ -1,13 +1,13 @@
 <template>
   <div>
     <a-card>
-      <a-textarea v-model="model" />
+      <a-input class="question-wrapper" v-model="model" />
       <div v-for="(option, index) in options" :key="index">
         <a-radio :disabled="true"><a-input v-model="option.text"/></a-radio>
       </div>
       <div>
-        <a-button @click="add()" type="primary">
-          Add
+        <a-button class="add-option-btn" @click="add()" type="primary">
+          Add option
         </a-button>
       </div>
     </a-card>

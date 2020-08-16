@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-card>
-      <a-textarea v-model="model" />
+      <a-input class="question-wrapper" v-model="model" />
     </a-card>
   </div>
 </template>
