@@ -1,5 +1,5 @@
 import FormService from "@/services/FormService";
-
+import router from "../router";
 const state = {
   form: {
     components: []
@@ -36,7 +36,8 @@ const actions = {
     commit(types.SET_OPTIONS, { index, options });
   },
   async saveForm({ state }) {
-    await FormService.saveForm(state.form);
+    const response = await FormService.saveForm(state.form);
+    router.push(`/viewer?id=${response.data.id}`);
   }
 };
 
