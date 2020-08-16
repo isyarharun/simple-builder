@@ -2,21 +2,36 @@
   <div>
     <a-card>
       <div class="question-wrapper">{{ question }}</div>
-      <a-input :value="responseData" placeholder="Your answer" />
+      <a-input v-model="model" placeholder="Your answer" />
     </a-card>
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     question: String,
-    response: String
+    response: String,
+    index: Number
   },
   data() {
     return {
-      responseData: this.response
+      value: ""
     };
+  },
+  methods: {
+    ...mapActions(["setViewerValue"])
+  },
+  computed: {
+    model: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.value = value;
+        this.setViewerValue({ index: this.index, value });
+      }
+    }
   }
-  
 };
 </script>

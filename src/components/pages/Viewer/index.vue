@@ -5,7 +5,8 @@
       <a-col :span="12">
         <div v-for="(component, index) in components" :key="index">
           <component
-            :is="component.component"
+            :is="getComponent(component.type)"
+            :index="index"
             :options="component.options"
             :question="component.question"
           />
@@ -46,33 +47,40 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["fetchSavedForm", "setViewerComponents"]),
+    ...mapActions(["fetchSavedForm", "setViewerComponents", "submitForm"]),
+    getComponent(type) {
+      if (type === "Static") {
+        return Static;
+      } else if (type === "Input") {
+        return Input;
+      } else if (type === "Dropdown") {
+        return Dropdown;
+      } else if (type === "Radio") {
+        return Radio;
+      }
+    },
     generateForm() {
       for (let i = 0; i < this.builderComponents.length; i++) {
         let current = this.builderComponents[i];
         if (current.type === "Static") {
           this.components.push({
             type: "Static",
-            component: Static,
             question: current.question
           });
         } else if (current.type === "Input") {
           this.components.push({
             type: "Input",
-            component: Input,
             question: current.question
           });
         } else if (current.type === "Radio") {
           this.components.push({
             type: "Radio",
-            component: Radio,
             question: current.question,
             options: current.options
           });
         } else if (current.type === "Dropdown") {
           this.components.push({
             type: "Dropdown",
-            component: Dropdown,
             question: current.question,
             options: current.options
           });
@@ -81,7 +89,8 @@ export default {
       this.setViewerComponents(this.components);
     },
     sendForm() {
-      console.log(JSON.stringify(this.viewComponents));
+      const id = this.$route.query.id;
+      this.submitForm(id);
     }
   },
   async mounted() {
