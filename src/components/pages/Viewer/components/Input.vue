@@ -2,14 +2,21 @@
   <div>
     <a-card>
       <div>{{ question }}</div>
-      <a-input placeholder="Your answer" />
+      <a-input :value="responseData" placeholder="Your answer" />
     </a-card>
   </div>
 </template>
 <script>
 export default {
   props: {
-    question: String
+    question: String,
+    response: String
+  },
+  data() {
+    return {
+      responseData: this.response
+    };
   }
+  
 };
 </script>

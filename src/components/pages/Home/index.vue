@@ -31,7 +31,7 @@
       </a-dropdown>
     </div>
     <div>
-      <a-button @click="saveForm" type="primary" style="margin-left: 8px">
+      <a-button @click="save" type="primary" style="margin-left: 8px">
         Save
       </a-button>
     </div>
@@ -56,7 +56,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["setComponents"]),
+    ...mapActions(["setComponents", "saveForm"]),
     addComponent(type) {
       if (type === "Static") {
         this.components.push({
@@ -86,8 +86,8 @@ export default {
 
       this.setComponents(this.components);
     },
-    saveForm() {
-      console.log(JSON.stringify(this.getComponents));
+    save() {
+      this.saveForm();
     }
   }
 };

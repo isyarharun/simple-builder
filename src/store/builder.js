@@ -1,3 +1,5 @@
+import FormService from "@/services/FormService";
+
 const state = {
   form: {
     components: []
@@ -32,6 +34,9 @@ const actions = {
   },
   setOptions({ commit }, { index, options }) {
     commit(types.SET_OPTIONS, { index, options });
+  },
+  async saveForm({ state }) {
+    await FormService.saveForm(state.form);
   }
 };
 

@@ -7,6 +7,11 @@
         :question="component.question"
       />
     </div>
+    <div>
+      <a-button @click="sendForm" type="primary" style="margin-left: 8px">
+        Send
+      </a-button>
+    </div>
   </div>
 </template>
 <script>
@@ -14,18 +19,26 @@ import Dropdown from "./components/Dropdown";
 import Static from "./components/Static";
 import Input from "./components/Input";
 import Radio from "./components/Radio";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   components: { Dropdown, Static, Input, Radio },
   data() {
     return {
-      builderData: [],
       components: []
     };
   },
+  computed: {
+    ...mapGetters({
+      builderComponents: "getBuilderComponents",
+      viewComponents: "getViewerComponents"
+    })
+  },
   methods: {
+    ...mapActions(["fetchSavedForm", "setViewerComponents"]),
     generateForm() {
-      for (let i = 0; i < this.builderData.length; i++) {
-        let current = this.builderData[i];
+      for (let i = 0; i < this.builderComponents.length; i++) {
+        let current = this.builderComponents[i];
         if (current.type === "Static") {
           this.components.push({
             type: "Static",
@@ -54,12 +67,15 @@ export default {
           });
         }
       }
+      this.setViewerComponents(this.components);
+    },
+    sendForm() {
+      console.log(JSON.stringify(this.viewComponents));
     }
   },
-  mounted() {
-    this.builderData = JSON.parse(
-      '[{"type":"Static","component":{"props":{"question":{},"index":{}},"methods":{},"computed":{"model":{}},"staticRenderFns":[],"_compiled":true,"beforeCreate":[null],"beforeDestroy":[null],"__file":"src/components/pages/Home/components/bulder/Static.vue","_Ctor":{}},"question":"only text"},{"type":"Radio","component":{"props":{"question":{},"index":{}},"methods":{},"computed":{"model":{}},"staticRenderFns":[],"_compiled":true,"beforeCreate":[null],"beforeDestroy":[null],"__file":"src/components/pages/Home/components/bulder/Radio.vue","_Ctor":{}},"question":"your question","options":[{"text":"Option 1"},{"text":"Option 2"}]}]'
-    );
+  async mounted() {
+    const id = this.$route.query.id;
+    await this.fetchSavedForm(id);
     this.generateForm();
   }
 };
